@@ -25,18 +25,57 @@ class NotesController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * POST
+     * Create notes
      */
     public function store(Request $request)
     {
         //
+        $body = $request->all();
+        $data = [
+            'title' => '',
+            'content' => '',
+            'id_user' => ''
+        ];
+
+        if (empty($body['title'])) {
+            return response()->json(['error' => 'Title vazio.'], 400);
+        }
+        if (empty($body['content'])) {
+            return response()->json(['error' => 'Conteúdo vazio.'], 400);
+        }
+        if (empty($body['id_user'])) {
+            return response()->json(['error' => 'Id vazio.'], 400);
+        }
+
+        $id_user = Notes::where('id_user', $body['id_user'])->first();
+        if ($id_user) {
+            $data['title'] = $body['title'];
+            $data['content'] = $body['content'];
+            $data['id_user'] = $body['id_user'];
+
+            Notes::create($data);
+
+            return response()->json(['success' => 'Anotação salva!.'], 200);
+        }
+        return response()->json(['error' => 'Id invalido.'], 400);
     }
 
     /**
      * Display the specified resource.
+     * GET
+     * show the notes
      */
-    public function show(Notes $notes)
+    public function show($id = '', Notes $notes)
     {
-        //
+        // 
+        $data = Notes::where('id_user', $id)->get();
+
+        if (!$data->isEmpty()) {
+            return response()->json($data, 200);
+        }
+
+        return response()->json(['error' => 'ID errado ou nenhuma anotação.'], 400);
     }
 
     /**

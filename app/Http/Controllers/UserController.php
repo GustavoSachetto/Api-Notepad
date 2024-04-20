@@ -18,11 +18,11 @@ class UserController extends Controller
         //
         $body = $request->all();
 
-        // Puxa todos os dados do banco apenas com o email
+        // pega todos os dados do banco apenas com o email, apenas o primeiro
         $user = User::where('email', $body['email'])->first();
 
         if(!$user){
-            return response()->json("{'error' => 'Erro, algum dado erro.'}", 400);
+            return response()->json(['error' => 'Erro, algum dado errado.'], 400);
         }
 
         $password = $body['password'];
@@ -36,9 +36,9 @@ class UserController extends Controller
                 'created_at'    =>  $user['created_at'],
                 'updated_at'    =>  $user['updated_at'],
             ];
-           return response()->json($data, 201);
+           return response()->json($data, 200);
         } else {
-            return response()->json("{'error' => 'Erro, algum dado erro.'}", 400);
+            return response()->json(['error' => 'Erro, algum dado errado.'], 400);
         }
     }
 
@@ -67,20 +67,20 @@ class UserController extends Controller
 
         $user = User::where('email', $body['email'])->first();
         if($user){
-            return response()->json("{'error' => 'Conta já cadastrada.'}", 400);
+            return response()->json(['error' => 'Conta já cadastrada.'], 400);
         }
 
         if (filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
             $data['email'] = $body['email'];
         } else {
-            return response()->json("{'error' => 'E-mail inválido.'}", 400);
+            return response()->json(['error' => 'E-mail inválido.'], 400);
         }
 
         $data['name'] = $body['name'];
         $data['password'] = Hash::make($body['password']);
 
         User::create($data);
-        return response()->json("{'success' => 'Usuário cadastrado com sucesso!.'}", 201);
+        return response()->json(['success' => 'Usuário cadastrado com sucesso!.'], 200);
     }
 
     /**
