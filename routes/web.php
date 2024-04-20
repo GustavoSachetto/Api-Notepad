@@ -10,7 +10,7 @@ Route::group([
     Route::apiResource('/' , UserController::class);
     Route::apiResource('/notes' , NotesController::class);
 
-    Route::get('/getCSFR' , function(){
+    Route::get('/getCSRF' , function(){
         return csrf_token();
     });
 });

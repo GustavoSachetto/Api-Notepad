@@ -10,6 +10,8 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * GET
+     * Validate user (login)
      */
     public function index(Request $request)
     {
@@ -50,6 +52,8 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * POST
+     * Create new user
      */
     public function store(Request $request)
     {
@@ -61,6 +65,11 @@ class UserController extends Controller
             'password' => '',
         ];
 
+        $user = User::where('email', $body['email'])->first();
+        if($user){
+            return response()->json("{'error' => 'Conta já cadastrada.'}", 400);
+        }
+
         if (filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
             $data['email'] = $body['email'];
         } else {
@@ -71,7 +80,7 @@ class UserController extends Controller
         $data['password'] = Hash::make($body['password']);
 
         User::create($data);
-        return response()->json("{'success' => 'Usuário cadastrado com sucesso!.'}", 400);
+        return response()->json("{'success' => 'Usuário cadastrado com sucesso!.'}", 201);
     }
 
     /**

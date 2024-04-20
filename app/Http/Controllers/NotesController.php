@@ -13,7 +13,6 @@ class NotesController extends Controller
     public function index()
     {
         //
-        return'asdadasda';
     }
 
     /**
