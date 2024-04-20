@@ -5,8 +5,12 @@ use App\Http\Controllers\NotesController;
 use App\Http\Controllers\UserController;
 
 Route::group([
-    'prefix' => 'v1',
+    'prefix' => 'v1'
 ], function(){
-    Route::resource('/' , UserController::class);
-    Route::resource('/notes' , NotesController::class);
+    Route::apiResource('/' , UserController::class);
+    Route::apiResource('/notes' , NotesController::class);
+
+    Route::get('/getCSFR' , function(){
+        return csrf_token();
+    });
 });

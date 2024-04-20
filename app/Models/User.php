@@ -10,5 +10,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    //NomeTabela
     protected $table = 'users';
+    
+    //Campos que aceitam dados em massa
+    protected $fillable = ['name', 'email', 'password'];
 }

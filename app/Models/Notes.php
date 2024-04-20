@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notes extends Model
 {
     use HasFactory;
+    //NomeTabela
     protected $table = 'notes';
+    
 }
