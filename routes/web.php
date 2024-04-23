@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CsrfController;
 
 Route::group([
     'prefix' => 'v1'
@@ -19,7 +20,5 @@ Route::group([
         Route::delete('/delete/{id?}', [NoteController::class, 'delete']);
     });
 
-    Route::get('/getCSRF' , function(){
-        return csrf_token();
-    });
+    Route::get('/getCSRF', [CsrfController::class, 'token']);
 });
