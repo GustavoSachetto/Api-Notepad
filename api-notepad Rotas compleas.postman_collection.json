@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "fc967f3f-e16b-48b9-ba32-08c7f2735afc",
+		"name": "api-notepad Rotas compleas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32452036",
+		"_collection_link": "https://api-carros-gs.postman.co/workspace/api_notepad~919a87da-a618-4aa5-a9cd-bde54242fed2/collection/32452036-fc967f3f-e16b-48b9-ba32-08c7f2735afc?action=share&source=collection_link&creator=32452036"
+	},
+	"item": [
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "Create Note",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Minha Amada\",\r\n    \"content\": \"não existe\",\r\n    \"id_user\": \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/notes/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"notes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/notes/delete/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"notes",
+								"delete",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Note",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"title\" : \"Quero\",\r\n\t\"content\" : \"Minha casa!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/notes/edit/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"notes",
+								"edit",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Note",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id_user\": \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/notes/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"notes",
+								"read"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Validate Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"QueroIrPara@Casa.com\",\r\n    \"password\":\"quero\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/validate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"QUERO IR PRA CASA\",\r\n    \"email\": \"QueroIrPara@Casa.com\",\r\n    \"password\":\"quero\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "getCSRF",
+			"item": [
+				{
+					"name": "getCSRF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api_notepad/public/v1/getCSRF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_notepad",
+								"public",
+								"v1",
+								"getCSRF"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
