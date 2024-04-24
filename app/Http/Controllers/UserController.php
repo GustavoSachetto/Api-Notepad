@@ -15,6 +15,10 @@ class UserController extends Controller
             'email'    => '',
             'password' => '',
         ];
+        
+        if(empty($body['name']) || empty($body['email']) || empty($body['password'])) {
+            return response()->json(['error' => 'Todos os campos são obrigatórios.'], 400);
+        }
 
         $user = User::where('email', $body['email'])->first();
         if($user){
@@ -36,11 +40,11 @@ class UserController extends Controller
 
     public function validate(Request $request){
         $body = $request->all();
+
         if (!isset($body['email']) || !isset($body['password'])) {
             return response()->json(['error' => 'Campos obrigatórios ausentes.'], 400);
         }
         
-
         // pega todos os dados do banco apenas com o email, apenas o primeiro
         $user = User::where('email', $body['email'])->first();
 

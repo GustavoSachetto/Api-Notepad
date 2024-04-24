@@ -22,3 +22,4 @@ Route::group([
 
     Route::get('/getCSRF', [CsrfController::class, 'token']);
 });
+
