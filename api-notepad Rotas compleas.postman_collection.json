@@ -31,15 +31,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/notes/create",
-							"protocol": "http",
+							"raw": "{{URL}}/notes/create",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"notes",
 								"create"
 							]
@@ -59,15 +55,11 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/notes/delete/16",
-							"protocol": "http",
+							"raw": "{{URL}}/notes/delete/16",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"notes",
 								"delete",
 								"16"
@@ -97,15 +89,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/notes/edit/8",
-							"protocol": "http",
+							"raw": "{{URL}}/notes/edit/8",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"notes",
 								"edit",
 								"8"
@@ -117,17 +105,17 @@
 				{
 					"name": "Read Note",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"id_user\": \"5\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -135,17 +123,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/notes/read",
-							"protocol": "http",
+							"raw": "{{URL}}/notes/read/2",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"notes",
-								"read"
+								"read",
+								"2"
 							]
 						}
 					},
@@ -163,7 +148,7 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
 								"type": "text"
 							}
 						],
@@ -177,15 +162,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/validate",
-							"protocol": "http",
+							"raw": "{{URL}}/validate",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"validate"
 							]
 						}
@@ -199,7 +180,7 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
+								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
 								"type": "text"
 							}
 						],
@@ -213,15 +194,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/create",
-							"protocol": "http",
+							"raw": "{{URL}}/create",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"create"
 							]
 						}
@@ -239,15 +216,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/api_notepad/public/v1/getCSRF",
-							"protocol": "http",
+							"raw": "{{URL}}/getCSRF",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
 							"path": [
-								"api_notepad",
-								"public",
-								"v1",
 								"getCSRF"
 							]
 						}

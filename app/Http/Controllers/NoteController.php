@@ -40,10 +40,12 @@ class NoteController extends Controller
         return response()->json(['error' => 'Id invalido.'], 400);
     }
 
-    public function read(Request $request){
-        $body = $request->all();
+    public function read(Request $request, $id = null){
+        if($id == null){
+            return response()->json(['error' => 'Nenhum id inserido.'], 400);
+        }
 
-        $data = Notes::where('id_user', $body['id_user'])->get();
+        $data = Notes::where('id_user', $id)->get();
 
         if (!$data->isEmpty()) {
             return response()->json($data, 200);
