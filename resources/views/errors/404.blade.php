@@ -1,3 +1,3 @@
 {
-    "error" : "404 Página não encontrada!"
+    "error" : "404 Ñão encontrado"
 }

@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fc967f3f-e16b-48b9-ba32-08c7f2735afc",
+		"_postman_id": "45a89cd9-c9de-4814-9980-acfea2a8e510",
 		"name": "api-notepad Rotas compleas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32452036",
-		"_collection_link": "https://api-carros-gs.postman.co/workspace/api_notepad~919a87da-a618-4aa5-a9cd-bde54242fed2/collection/32452036-fc967f3f-e16b-48b9-ba32-08c7f2735afc?action=share&source=collection_link&creator=32452036"
+		"_exporter_id": "34663319"
 	},
 	"item": [
 		{
@@ -17,13 +16,13 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "beaad7bc-3110-4c63-95b4-dc366b5c51ef"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Minha Amada\",\r\n    \"content\": \"não existe\",\r\n    \"id_user\": \"5\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Minha Amada\",\r\n    \"content\": \"não existe\",\r\n    \"id_user\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -31,13 +30,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/notes/create",
+							"raw": "{{URL}}/notes",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"notes",
-								"create"
+								"notes"
 							]
 						}
 					},
@@ -50,19 +48,18 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "ace465b8-5f0b-4cd4-b1e6-6e30c7f99392"
 							}
 						],
 						"url": {
-							"raw": "{{URL}}/notes/delete/16",
+							"raw": "{{URL}}/notes/2",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"notes",
-								"delete",
-								"16"
+								"2"
 							]
 						}
 					},
@@ -75,8 +72,8 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "s9VfWOmEu2fdnGQcUCzELrmhFRdpwYNPyfxtMGLf",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "9f40f536-71e0-4bd7-ae66-df250cf8d7d7"
 							}
 						],
 						"body": {
@@ -89,13 +86,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/notes/edit/8",
+							"raw": "{{URL}}/notes/8",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"notes",
-								"edit",
 								"8"
 							]
 						}
@@ -104,13 +100,16 @@
 				},
 				{
 					"name": "Read Note",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "93e587c8-c74c-4b0c-a4b3-6ca732ea3fd1"
 							}
 						],
 						"body": {
@@ -123,14 +122,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/notes/read/2",
+							"raw": "{{URL}}/notes/1",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"notes",
-								"read",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -148,13 +146,13 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "4eed78df-c386-42c4-83b6-c05de38f7706"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"QueroIrPara@Casa.com\",\r\n    \"password\":\"quero\"\r\n}",
+							"raw": "{\r\n    \"email\": \"rodrigo@ramos.com\",\r\n    \"password\":\"ramos\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -162,11 +160,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/validate",
+							"raw": "{{URL}}/users/validate",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
+								"users",
 								"validate"
 							]
 						}
@@ -180,13 +179,13 @@
 						"header": [
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "qMpIzgPafaY8WxZSNtD7uqn0wmTEVPioFn9zYCew",
-								"type": "text"
+								"value": "{{TOKEN}}",
+								"uuid": "6df4921c-b0d5-41ac-9939-42960a1d03e2"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"QUERO IR PRA CASA\",\r\n    \"email\": \"QueroIrPara@Casa.com\",\r\n    \"password\":\"quero\"\r\n}",
+							"raw": "{\r\n    \"name\":\"QUERO IR PRA CASA\",\r\n    \"email\": \"rodrigo@ramos.com\",\r\n    \"password\":\"ramos\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -194,12 +193,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/create",
+							"raw": "{{URL}}/users",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"create"
+								"users"
 							]
 						}
 					},
