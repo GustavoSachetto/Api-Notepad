@@ -14,15 +14,18 @@ class UserSeeder extends Seeder
     private array $fields = [
         [
             'name' => 'Gustavo Sachetto',
-            'email' => 'gustavo@gmail.com'
+            'email' => 'gustavo@gmail.com',
+            'password' => 'admin'
         ],
         [
             'name' => 'Gustavo Gualda',
-            'email' => 'gualda@gmail.com'
+            'email' => 'gualda@gmail.com',
+            'password' => 'admin'
         ],
         [
             'name' => 'Lucas Firmino',
-            'email' => 'firmino@email.com'
+            'email' => 'firmino@email.com',
+            'password' => 'admin'
         ]
     ];
 
