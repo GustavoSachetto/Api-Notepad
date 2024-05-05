@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Notes;
+use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Laravel\Prompts\Note;
 
 class NoteController extends Controller
 {
@@ -33,7 +32,7 @@ class NoteController extends Controller
             $data['content'] = $body['content'];
             $data['id_user'] = $body['id_user'];
 
-            Notes::create($data);
+            Note::create($data);
 
             return response()->json(['success' => 'Anotação salva!.'], 200);
         }
@@ -45,7 +44,7 @@ class NoteController extends Controller
             return response()->json(['error' => 'Nenhum id inserido.'], 400);
         }
 
-        $data = Notes::where('id_user', $id)->get();
+        $data = Note::where('id_user', $id)->get();
 
         if (!$data->isEmpty()) {
             return response()->json($data, 200);
@@ -59,12 +58,12 @@ class NoteController extends Controller
             return response()->json(['error' => 'Nenhum ID inserido.'], 400);
         }
 
-        $idVerify = Notes::where('id', $id)->first();
+        $idVerify = Note::where('id', $id)->first();
         if(!$idVerify){
             return response()->json(['error' => 'Id invalido.'], 400);
         }
 
-        $Db = Notes::findOrFail($id);
+        $Db = Note::findOrFail($id);
         $Db->update($request->all());
     
         return response()->json($Db, 200);
@@ -75,7 +74,7 @@ class NoteController extends Controller
             return response()->json(['error' => 'Nenhum ID inserido.'], 400);
         }
 
-        $idVerify = Notes::where('id', $id)->first();
+        $idVerify = Note::where('id', $id)->first();
         if(!$idVerify){
             return response()->json(['error' => 'Id invalido.'], 400);
         }
