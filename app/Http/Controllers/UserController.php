@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function validate(Request $request){
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
         if ($validator->fails()) {
@@ -58,7 +58,6 @@ class UserController extends Controller
             }else {
                 return response()->json(['error' => 'Erro, algum dado errado.'], 400);
             }
-
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);
         }
