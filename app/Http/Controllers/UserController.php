@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -45,7 +46,9 @@ class UserController extends Controller
             if(!$user){
                 return response()->json(['error' => 'Erro, algum dado errado.'], 400);
             }
+
             if (Hash::check($request->password,$user->password)) {
+                $token = JWTAuth::fromUser($user);
                 $data = [
                     'success'       => 'Usuário autenticado',
                     'name'          =>  $user['name'],
@@ -53,6 +56,8 @@ class UserController extends Controller
                     'id'            =>  $user['id'],
                     'created_at'    =>  $user['created_at'],
                     'updated_at'    =>  $user['updated_at'],
+                    'token'         =>  $token,
+                    'token_type'    =>  'bearer'
                 ];
                return response()->json($data, 200);
             }else {

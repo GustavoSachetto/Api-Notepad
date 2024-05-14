@@ -19,7 +19,6 @@ class NoteController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
-
         try {
             $note = new Note([
                 'title' => $request->title,
@@ -29,7 +28,7 @@ class NoteController extends Controller
 
             $note->save();
             return response()->json(['success' => 'Anotação salva!.'], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception $e ) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

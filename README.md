@@ -11,3 +11,5 @@ adicione os cabeçãlhos da sua requisição
 
 crie um arquivo .env na raiz do projeto e
 copie os dados da.env.example
+
+php artisan jwt:secret

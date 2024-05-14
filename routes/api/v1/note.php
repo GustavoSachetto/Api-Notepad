@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 
-Route::post('', [NoteController::class, 'store']);
-Route::get('/{id?}', [NoteController::class, 'read']);
-Route::put('/{id?}', [NoteController::class, 'update']);
-Route::delete('/{id?}', [NoteController::class, 'delete']);
+Route::middleware('jwt.auth')->post('', [NoteController::class, 'store']);
+Route::middleware('jwt.auth')->get('/{id?}', [NoteController::class, 'read']);
+Route::middleware('jwt.auth')->put('/{id?}', [NoteController::class, 'update']);
+Route::middleware('jwt.auth')->delete('/{id?}', [NoteController::class, 'delete']);
