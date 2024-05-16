@@ -80,7 +80,7 @@ Esta é uma API para um bloco de notas simples, construída usando Laravel. A AP
     "updated_at": "2024-05-16T00:19:06.000000Z",
     "token": "{token}",
     "token_type": "bearer"
-}
+    }
     ```
 
 ### Notas
