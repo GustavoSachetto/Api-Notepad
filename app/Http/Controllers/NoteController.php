@@ -11,6 +11,7 @@ class NoteController extends Controller
     //
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
@@ -18,6 +19,10 @@ class NoteController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
+        }
+        $user = auth()->user();
+        if ($user->id != $request->id_user) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
         }
         try {
             $note = new Note([
@@ -37,6 +42,10 @@ class NoteController extends Controller
     {
         if (!is_numeric($id)) {
             return response()->json(['error' => 'Id invalido.'], 400);
+        }
+        $user = auth()->user();
+        if ($user->id != $id) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
         }
         try {
             $notes = Note::where('id_user', $id)->get();
@@ -58,6 +67,10 @@ class NoteController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
+        $user = auth()->user();
+        if ($user->id != $id) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        }
         try {
             $idVerify = Note::where('id', $id)->first();
             if (!$idVerify) {
@@ -73,6 +86,10 @@ class NoteController extends Controller
 
     public function delete($id)
     {
+        $user = auth()->user();
+        if ($user->id != $id) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        }
         try {
             $idVerify = Note::where('id', $id)->first();
             if (!$idVerify) {
