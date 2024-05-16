@@ -86,8 +86,9 @@ class NoteController extends Controller
 
     public function delete($id)
     {
+        $idVerify = Note::where('id', $id)->first();
         $user = auth()->user();
-        if ($user->id != $id) {
+        if ($user->id != $idVerify['id_user']) {
             return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
         }
         try {
