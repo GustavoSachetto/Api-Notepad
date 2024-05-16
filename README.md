@@ -72,14 +72,14 @@ Esta é uma API para um bloco de notas simples, construída usando Laravel. A AP
 - **Resposta de Sucesso:**
     ```json
     {
-    "success": "Usuário autenticado",
-    "name": "Jorge da Silva Pereira",
-    "email": "teste@gustavo.com",
-    "id": 3,
-    "created_at": "2024-05-16T00:19:06.000000Z",
-    "updated_at": "2024-05-16T00:19:06.000000Z",
-    "token": "{token}",
-    "token_type": "bearer"
+        "success": "Usuário autenticado",
+        "name": "Jorge da Silva Pereira",
+        "email": "teste@gustavo.com",
+        "id": 3,
+        "created_at": "2024-05-16T00:19:06.000000Z",
+        "updated_at": "2024-05-16T00:19:06.000000Z",
+        "token": "{token}",
+        "token_type": "bearer"
     }
     ```
 
