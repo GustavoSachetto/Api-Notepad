@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
     /** 
      * Campos que aceitam dados em massa
     */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'telephone', 'birth_date'];
 
     public function getJWTIdentifier(){
         return $this->getKey();
