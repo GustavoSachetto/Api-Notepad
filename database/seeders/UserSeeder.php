@@ -15,17 +15,23 @@ class UserSeeder extends Seeder
         [
             'name' => 'Gustavo Sachetto',
             'email' => 'gustavo@gmail.com',
-            'password' => 'admin'
+            'password' => 'admin',
+            'telephone' => '11934455430',
+            'birth_date' => '31-08-2006'
         ],
         [
             'name' => 'Gustavo Gualda',
             'email' => 'gualda@gmail.com',
-            'password' => 'admin'
+            'password' => 'admin',
+            'telephone' => '11938655430',
+            'birth_date' => '30-11-2006'
         ],
         [
             'name' => 'Lucas Firmino',
             'email' => 'firmino@email.com',
-            'password' => 'admin'
+            'password' => 'admin',
+            'telephone' => '11999455430',
+            'birth_date' => '22-07-2007'
         ]
     ];
 

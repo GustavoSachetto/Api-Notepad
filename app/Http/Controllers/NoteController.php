@@ -11,23 +11,26 @@ class NoteController extends Controller
     //
     public function store(Request $request)
     {
-        
+        $user = auth()->user();
+        if ($user->id != $request->id_user) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
+            'category' => 'required',
             'id_user' => 'required|exists:users,id' // Verifica a se o id existe na tabeça
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
-        $user = auth()->user();
-        if ($user->id != $request->id_user) {
-            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
-        }
+        
         try {
             $note = new Note([
                 'title' => $request->title,
                 'content' => $request->content,
+                'category' => $request->category,
                 'id_user' => $request->id_user
             ]);
 
@@ -38,21 +41,38 @@ class NoteController extends Controller
         }
     }
 
-    public function read($id = null)
+    public function read($id = null) /* arrumar */
     {
-        if (!is_numeric($id)) {
-            return response()->json(['error' => 'Id invalido.'], 400);
-        }
         $user = auth()->user();
         if ($user->id != $id) {
             return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
         }
+        
+        if (!is_numeric($id)) {
+            return response()->json(['error' => 'Id invalido.'], 400);
+        }
+        
         try {
-            $notes = Note::where('id_user', $id)->get();
+            $data = [];
+            $notes = Note::where([
+                ['id_user', '=' , $id],
+                ['deleted', '=' , false ],
+            ])->get();
             if ($notes->isEmpty()) {
                 return response()->json(['error' => 'Nenhuma anotação para o id fornecido.'], 400);
             }
-            return response()->json($notes, 200);
+            foreach ($notes as $note) {
+                $data[] = [
+                    'id'       => $note->id,
+                    'title'    => $note->title,
+                    'content'  => $note->content,
+                    'category' => $note->category,
+                    'deleted'  => (bool) $note->deleted,
+                    'id_user'  => $note->id_user
+                ];
+            }
+
+            return response()->json($data, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -60,25 +80,34 @@ class NoteController extends Controller
 
     public function update(Request $request, $id = null)
     {
+        $note = Note::find($id);
+        if (!$note) {
+            return response()->json(['error' => 'Id inválido.'], 400);
+        }
+    
+
+        $user = auth()->user();
+        if ($user->id != $note->id_user) {
+            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'content' => 'required',
+            'content' => 'required'
         ]);
+    
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
-        $user = auth()->user();
-        if ($user->id != $id) {
-            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
-        }
+    
         try {
-            $idVerify = Note::where('id', $id)->first();
-            if (!$idVerify) {
-                return response()->json(['error' => 'Id invalido.'], 400);
+            if ($note->deleted) {
+                return response()->json(['error' => 'Id de nota que já foi deletada.'], 400);
             }
-            $Db = Note::findOrFail($id);
-            $Db->update($request->all());
-            return response()->json($Db, 200);
+
+            $note->update($request->all());
+    
+            return response()->json($note, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -86,17 +115,21 @@ class NoteController extends Controller
 
     public function delete($id)
     {
-        $idVerify = Note::where('id', $id)->first();
+        $data = Note::find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Id invalido.'], 400);
+        }
+        if($data->deleted){
+            return response()->json(['error' => 'Id de nota que já foi deletada.'], 400);
+        }
         $user = auth()->user();
-        if ($user->id != $idVerify['id_user']) {
+        if ($user->id != $data['id_user']) {
             return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
         }
+
         try {
-            $idVerify = Note::where('id', $id)->first();
-            if (!$idVerify) {
-                return response()->json(['error' => 'Id invalido.'], 400);
-            }
-            $idVerify->delete();
+            $data['deleted'] = true;
+            $data->update();
             return response()->json(['success' => 'Nota apagada'], 400);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
