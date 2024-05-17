@@ -50,6 +50,9 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
             if(!$user){
                 return response()->json(['error' => 'Erro, algum dado errado.'], 400);
             }
+            if($user->deleted){
+                return response()->json(['error' => 'Conta deletada.'], 400);
+            }
 
             if (Hash::check($request->password,$user->password)) {
                 $token = JWTAuth::fromUser($user);
@@ -73,5 +76,96 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    } 
+    }
+    
+    public function read(){
+        try{
+            $user = auth()->user();
+            return response()->json([
+                "id" => $user->id,
+                "name"=> $user->name,
+                "email"=> $user->email,
+                "telephone"=> $user->telephone,
+                "birth_date"=> $user->birth_date,
+                "created_at"=> $user->created_at,
+                "updated_at"=> $user->updated_at,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao apagar a conta.'], 500);
+        }
+
+    }
+
+    public function delete(){
+        try {
+            $user = auth()->user();
+            $userDB = User::find($user->id);
+
+            if($userDB->deleted){
+                return response()->json(['error' => 'Conta foi deletada, não tem o que atualizar.'], 200);
+            }
+            
+            if ($userDB) {
+                $userDB->deleted = true;
+                $userDB->save();
+    
+                return response()->json(['success' => 'Conta apagada com sucesso.'], 200);
+            } else {
+                return response()->json(['error' => 'Usuário não encontrado.'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao apagar a conta.'], 500);
+        }
+    }
+
+    public function update(Request $request){
+        try {
+            $user = auth()->user();
+            $userDB = User::find($user->id);
+
+            if($userDB->deleted){
+                return response()->json(['error' => 'Conta já deletada.'], 200);
+            }
+
+            // Validar os dados de entrada
+            $validator = Validator::make($request->all(), [
+                'name' => 'sometimes|string|max:255',
+                'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+                'password' => 'sometimes|string|min:6|confirmed',
+                'telephone' => 'sometimes|string|max:20',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            // Atualizar os dados do usuário
+            if ($request->has('name')) {
+                $userDB->name = $request->input('name');
+            }
+            if ($request->has('email')) {
+                $userDB->email = $request->input('email');
+            }
+            if ($request->has('password')) {
+                $userDB->password = Hash::make($request->input('password'));
+            }
+            if ($request->has('telephone')) {
+                $userDB->telephone = $request->input('telephone');
+            }
+
+            $userDB->save();
+
+            return response()->json(['success' => 'Dados atualizados com sucesso.', 'user' => [
+                "id" => $user->id,
+                "name"=> $user->name,
+                "email"=> $user->email,
+                "telephone"=> $user->telephone,
+                "birth_date"=> $user->birth_date,
+                "created_at"=> $user->created_at,
+                "updated_at"=> $user->updated_at,
+            ]], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar os dados.', 'message' => $e->getMessage()], 500);
+        }
+    }
 }
