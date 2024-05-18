@@ -12,15 +12,14 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        if ($user->id != $request->id_user) {
-            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        if($user->deleted){
+            return response()->json(['error' => 'Conta deletada.'], 400);
         }
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
             'category' => 'required',
-            'id_user' => 'required|exists:users,id' // Verifica a se o id existe na tabeça
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
@@ -31,7 +30,7 @@ class NoteController extends Controller
                 'title' => $request->title,
                 'content' => $request->content,
                 'category' => $request->category,
-                'id_user' => $request->id_user
+                'id_user' => $user->id
             ]);
 
             $note->save();
@@ -41,21 +40,16 @@ class NoteController extends Controller
         }
     }
 
-    public function read($id = null) /* arrumar */
+    public function read()
     {
         $user = auth()->user();
-        if ($user->id != $id) {
-            return response()->json(['error' => 'Token não corresponde ao seu Id'], 403);
+        if($user->deleted){
+            return response()->json(['error' => 'Conta deletada.'], 400);
         }
-        
-        if (!is_numeric($id)) {
-            return response()->json(['error' => 'Id invalido.'], 400);
-        }
-        
         try {
             $data = [];
             $notes = Note::where([
-                ['id_user', '=' , $id],
+                ['id_user', '=' , $user->id],
                 ['deleted', '=' , false ],
             ])->get();
             if ($notes->isEmpty()) {
