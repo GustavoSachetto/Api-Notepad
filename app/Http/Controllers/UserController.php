@@ -81,6 +81,9 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
     public function read(){
         try{
             $user = auth()->user();
+            if($user->deleted){
+                return response()->json(['error' => 'Conta deletada.'], 400);
+            }
             return response()->json([
                 "id" => $user->id,
                 "name"=> $user->name,
@@ -102,7 +105,7 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
             $userDB = User::find($user->id);
 
             if($userDB->deleted){
-                return response()->json(['error' => 'Conta foi deletada, não tem o que atualizar.'], 200);
+                return response()->json(['error' => 'Conta já foi apagada anteriormente.'], 200);
             }
             
             if ($userDB) {
@@ -124,7 +127,7 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
             $userDB = User::find($user->id);
 
             if($userDB->deleted){
-                return response()->json(['error' => 'Conta já deletada.'], 200);
+                return response()->json(['error' => 'Conta já deletada. Não tem o que atualizar'], 200);
             }
 
             // Validar os dados de entrada
