@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class NoteController extends Controller
 {
@@ -124,9 +125,21 @@ class NoteController extends Controller
         try {
             $data['deleted'] = true;
             $data->update();
-            return response()->json(['success' => 'Nota apagada'], 400);
+            return response()->json(['success' => 'Nota apagada'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function search($title){
+        $user = auth()->user();
+        $notes = Note::where('id_user', $user->id)
+             ->where('deleted', false)
+             ->where('title', 'LIKE', "%{$title}%")
+             ->get();
+        if($notes->isEmpty()){
+            return response()->json(['error' => 'Não encontrado'], 404);
+        }
+        return response()->json($notes, 200);
+    }   
 }
