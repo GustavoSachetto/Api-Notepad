@@ -111,6 +111,7 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
             if ($userDB) {
                 $userDB->deleted = true;
                 $userDB->save();
+                JWTAuth::invalidate(JWTAuth::getToken());
     
                 return response()->json(['success' => 'Conta apagada com sucesso.'], 200);
             } else {
