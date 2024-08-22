@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telephone', 11)->nullable();
             $table->string('birth_date');
+            $table->softDeletes();
             $table->string('password');
-            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
 
