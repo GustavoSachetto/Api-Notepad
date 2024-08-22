@@ -3,58 +3,29 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserRequest;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserValidateRequest;
 
-class UserController extends Controller /* Criar funções de deletar e alterar */
+class UserController extends Controller 
 {
-    //
-    public function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-            'telephone' => 'required',
-            'birth_date' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
-
-        try{
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'telephone' => $request->telephone,
-                'birth_date' => $request->birth_date
-            ];
-            User::create($data);
-            return response()->json(['success' => 'Usuário cadastrado com sucesso!.'], 200);
-        }catch(\Exception $e){
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+    public function store(UserRequest $request){
+        $request->validated();
+        $request->merge(['password' => Hash::make($request->input('password'))]);
+        $user = User::create($request->only(['name', 'email', 'telephone', 'birth_date', 'password']));
+        
+        return new UserResource($user);
     }
 
-    public function validate(Request $request){
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
-        try{
-            $user = User::where('email', $request->email)->first();
-            if(!$user){
-                return response()->json(['error' => 'Erro, algum dado errado.'], 400);
-            }
-            if($user->deleted){
-                return response()->json(['error' => 'Conta deletada.'], 400);
-            }
+    public function validate(UserValidateRequest $request){
 
-            if (Hash::check($request->password,$user->password)) {
+        $request->validated();
+        $user = User::where('email', $request->email)->where('deleted', false)->firstOrFail();
+
+            if (Hash::check($request->password, $user->password)) {
                 $token = JWTAuth::fromUser($user);
                 $data = [
                     'id'            => $user['id'],
@@ -73,9 +44,7 @@ class UserController extends Controller /* Criar funções de deletar e alterar 
             }else {
                 return response()->json(['error' => 'Erro, algum dado errado.'], 400);
             }
-        }catch(\Exception $e){
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+
     }
     
     public function read(){

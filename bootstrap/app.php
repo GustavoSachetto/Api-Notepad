@@ -21,12 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response()->json(['error' => 'Url não encontrada'], 404);
+                return response()->json(['message' => 'Url não encontrada', 'errors' => $e->getMessage()], 404);
             }
         });
         $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response()->json(['error' => 'Método não permitido'], 405);
+                return response()->json(['message' => 'Método não permitido', 'errors' => $e->getMessage()], 405);
             }
         });
     })->create();
