@@ -256,6 +256,22 @@
 			"item": [
 				{
 					"name": "Validate Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"var token = jsonData.token; \r",
+									"\r",
+									"pm.environment.set(\"TOKEN\", token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -266,7 +282,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"cadetess@email.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"raw": "{\r\n    \"email\": \"gualda@email.com\",\r\n    \"password\":\"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -298,7 +314,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Teste\",\r\n    \"email\": \"cadetess@email.com\",\r\n    \"password\":\"admin\",\r\n    \"telephone\": \"11999232875\",\r\n    \"birth_date\": \"28-12-1980\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Teste\",\r\n    \"email\": \"gualda@email.com\",\r\n    \"password\":\"admin\",\r\n    \"telephone\": \"11999232875\",\r\n    \"birth_date\": \"28-12-1980\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -405,7 +421,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "/*Colocar o campo que deseja atualizar*/\r\n{\r\n    \"name\": \"Gustavo Gualda\",\r\n    \"email\": \"gualdassss@gualda.com\",\r\n    \"telephone\": \"11940028988\",\r\n    \"password\": \"gualdaa\",\r\n    \"password_confirmation\": \"gualdaa\"\r\n}",
+							"raw": "/*Colocar o campo que deseja atualizar*/\r\n{\r\n    \"name\": \"Gustavo Gualda\",\r\n    \"email\": \"gualda@email.com\",\r\n    \"password\": \"adminn\",\r\n    \"password_confirmation\": \"adminn\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -489,6 +505,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost/api_notepad/public/api/v1"
 		}
 	]
 }
