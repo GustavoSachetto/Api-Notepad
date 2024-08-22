@@ -58,4 +58,10 @@ class UserController extends Controller
 
         return new UserResource($user);
     }
+
+    public function logout(){
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json(['success' => 'Logout bem sucedido.'], 200);
+    }
 }
