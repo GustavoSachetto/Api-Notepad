@@ -28,4 +28,33 @@ class UserUpdateRequest extends FormRequest
             'telephone' => 'sometimes|string|max:20',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.sometimes'     => 'O campo nome é opcional, mas se fornecido deve ser válido.',
+            'name.string'        => 'O campo nome deve ser uma string.',
+            'name.max'           => 'O nome não pode ter mais que 60 caracteres.',
+
+            'email.sometimes'    => 'O campo email é opcional, mas se fornecido deve ser válido.',
+            'email.string'       => 'O campo email deve ser uma string.',
+            'email.email'        => 'O campo email deve ser um email válido, exemplo: myaccount@gmail.com.',
+            'email.max'          => 'O email não pode ter mais que 255 caracteres.',
+            'email.unique'       => 'O email fornecido já está em uso.',
+
+            'password.sometimes' => 'O campo senha é opcional, mas se fornecido deve ser válido.',
+            'password.string'    => 'O campo senha deve ser uma string.',
+            'password.min'       => 'A senha deve ter no mínimo 6 caracteres.',
+            'password.confirmed' => 'A confirmação da senha não corresponde.',
+
+            'telephone.sometimes' => 'O campo telefone é opcional, mas se fornecido deve ser válido.',
+            'telephone.string'    => 'O campo telefone deve ser uma string.',
+            'telephone.max'       => 'O telefone não pode ter mais que 20 caracteres.',
+        ];
+    }
 }

@@ -29,4 +29,24 @@ class UserRequest extends FormRequest
             'birth_date' => 'required'
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required'       => 'O campo nome é obrigatório.',
+            'name.max'            => 'O nome não pode ter mais que 60 caracteres.',
+            'email.required'      => 'O campo email é obrigatório.',
+            'email.email'         => 'O campo email deve ser um email válido, exemplo: myaccount@gmail.com.',
+            'email.unique'        => 'O email fornecido já está em uso.',
+            'password.required'   => 'O campo senha é obrigatório.',
+            'password.min'        => 'A senha deve ter no mínimo 6 caracteres.',
+            'telephone.required'  => 'O campo telefone é obrigatório.',
+            'birth_date.required' => 'O campo data de nascimento é obrigatório.',
+        ];
+    }
 }

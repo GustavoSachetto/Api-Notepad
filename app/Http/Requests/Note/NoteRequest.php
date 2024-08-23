@@ -27,4 +27,23 @@ class NoteRequest extends FormRequest
             'category' => 'required|max:255',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required'   => 'O campo título é obrigatório.',
+            'title.max'        => 'O título não pode ter mais que 70 caracteres.',
+
+            'content.required' => 'O campo conteúdo é obrigatório.',
+            'content.max'      => 'O conteúdo não pode ter mais que 255 caracteres.',
+
+            'category.required' => 'O campo categoria é obrigatório.',
+            'category.max'      => 'A categoria não pode ter mais que 255 caracteres.',
+        ];
+    }
 }

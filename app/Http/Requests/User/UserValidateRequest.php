@@ -26,4 +26,20 @@ class UserValidateRequest extends FormRequest
             'password' => 'required'
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required'    => 'O campo email é obrigatório.',
+            'email.email'       => 'O campo email deve ser um email válido, exemplo: myaccount@gmail.com.',
+            'email.exists'      => 'O email fornecido não foi encontrado em nossos registros.',
+
+            'password.required' => 'O campo senha é obrigatório.',
+        ];
+    }
 }
