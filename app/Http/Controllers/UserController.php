@@ -33,7 +33,7 @@ class UserController extends Controller
                 'success'    => 'Usuário autenticado'
             ]);
         } else {
-            return response()->json(['error' => 'Erro, algum dado errado.'], 400);
+            return response()->json(['message' => 'Senha invalida.'], 400);
         }
     }
 
