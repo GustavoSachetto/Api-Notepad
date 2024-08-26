@@ -33,7 +33,7 @@ class UserController extends Controller
                 'success'    => 'Usuário autenticado'
             ]);
         } else {
-            return response()->json(['message' => 'Senha invalida.'], 400);
+            return response()->json(['message' => 'Senha inválida.'], 400);
         }
     }
 
@@ -54,8 +54,21 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request)
     {
         $user = User::findOrFail(auth()->user()->id);
-        $user->update($request->only(['name', 'telephone', 'email', 'password']));
 
+        if ($request->filled('new_password')) {
+            if($request->new_password == $request->current_password){
+                return response()->json(['message' => 'A nova senha não pode ser igual a atual.'], 400);
+            }
+            if (Hash::check($request->current_password, $user->password)) {
+                $request->merge(['password' => Hash::make($request->input('new_password'))]);
+                $user->update($request->only(['name', 'telephone', 'email', 'password']));
+            } else {
+                return response()->json(['message' => 'Senha inválida ou nenhuma senha inserida'], 400);
+            }
+        }
+    
+        $user->update($request->only(['name', 'telephone', 'email']));
+    
         return new UserResource($user);
     }
 

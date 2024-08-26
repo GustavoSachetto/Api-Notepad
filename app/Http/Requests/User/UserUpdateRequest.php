@@ -1,39 +1,36 @@
 <?php
-
 namespace App\Http\Requests\User;
 
+use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'name' => 'sometimes|string|max:60',
-            'email' => 'sometimes|string|email|max:255|unique:users,email',
-            'password' => 'sometimes|string|min:6|confirmed',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $this->user()->id,
+            'current_password' => 'required_with:new_password|string|min:6',
+            'new_password' => 'required_with:current_password|string|min:6|confirmed',
             'telephone' => 'sometimes|string|max:20',
         ];
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
+    public function withValidator(Validator $validator)
+    {
+        $validator->after(function ($validator) {
+            if ($this->has('password')) {
+                $validator->errors()->add('password', 'O campo password não é permitido.');
+            }
+        });
+    }
+
     public function messages(): array
     {
         return [
@@ -47,10 +44,14 @@ class UserUpdateRequest extends FormRequest
             'email.max'          => 'O email não pode ter mais que 255 caracteres.',
             'email.unique'       => 'O email fornecido já está em uso.',
 
-            'password.sometimes' => 'O campo senha é opcional, mas se fornecido deve ser válido.',
-            'password.string'    => 'O campo senha deve ser uma string.',
-            'password.min'       => 'A senha deve ter no mínimo 6 caracteres.',
-            'password.confirmed' => 'A confirmação da senha não corresponde.',
+            'current_password.required_with' => 'A senha atual é obrigatória quando uma nova senha é fornecida.',
+            'current_password.string'        => 'O campo senha atual deve ser uma string.',
+            'current_password.min'           => 'A senha atual deve ter no mínimo 6 caracteres.',
+
+            'new_password.required_with' => 'A nova senha é obrigatória quando uma a senha atual é fornecida.',
+            'new_password.string'    => 'O campo nova senha deve ser uma string.',
+            'new_password.min'       => 'A nova senha deve ter no mínimo 6 caracteres.',
+            'new_password.confirmed' => 'A confirmação da nova senha não corresponde.',
 
             'telephone.sometimes' => 'O campo telefone é opcional, mas se fornecido deve ser válido.',
             'telephone.string'    => 'O campo telefone deve ser uma string.',
