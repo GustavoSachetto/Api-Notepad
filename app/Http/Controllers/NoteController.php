@@ -33,8 +33,7 @@ class NoteController extends Controller
     public function update(NoteRequest $request, $id)
     {
         $note = Note::where('id_user', auth()->user()->id)->where('id', $id)->firstOrFail();
-        $request->merge(['id_user' => auth()->user()->id]);
-        $note->update($request->only('title', 'content', 'category', 'id_user'));
+        $note->update($request->only('title', 'content', 'category'));
 
         return new NoteResource($note);
     }
