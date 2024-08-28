@@ -66,10 +66,13 @@ class UserController extends Controller
                 return response()->json(['message' => 'Senha inválida ou nenhuma senha inserida'], 400);
             }
         }
-    
+        
+
         $user->update($request->only(['name', 'telephone', 'email']));
     
-        return new UserResource($user);
+        return (new UserResource($user))->additional([
+            "message" => "Dados atualizados com sucesso"
+        ]);
     }
 
     public function logout(){
