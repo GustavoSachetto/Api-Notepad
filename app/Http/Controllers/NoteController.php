@@ -22,7 +22,7 @@ class NoteController extends Controller
 
     public function read()
     {
-        $notes = Note::where([['id_user', '=', auth()->user()->id],])->get();
+        $notes = Note::where([['id_user', '=', auth()->user()->id]])->orderBy('created_at','desc')->get();
         if ($notes->isEmpty()) {
             return response()->json(['error' => 'Nenhuma anotação para o id fornecido.'], 400);
         }
