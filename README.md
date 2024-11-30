@@ -1,6 +1,11 @@
-# API de Bloco de Notas
+# Api-Notepad
 
 Esta é uma API para um bloco de notas simples, construída usando Laravel. A API permite aos usuários autenticados criar, ler, atualizar e deletar notas.
+
+__Colaboradores:__ <a href="https://github.com/GustavoSachetto" target="_blank">@Gustavo Sachetto</a> e
+<a href="https://github.com/iCrowleySHR" target="_blank">@Gustavo Gualda</a>.
+
+#laravel #php
 
 ## Requisitos
 
@@ -31,8 +36,8 @@ Esta é uma API para um bloco de notas simples, construída usando Laravel. A AP
     composer require tymon/jwt-auth
     php artisan jwt:secret
     ```
-    
-#### Registrar Usuário
+## Rotas    
+### Registrar Usuário
 
 - **URL:** `http://localhost/api_notepad/public/api/v1/users/`
 - **Método:** `POST`
@@ -55,7 +60,7 @@ Esta é uma API para um bloco de notas simples, construída usando Laravel. A AP
     }
     ```
 
-#### Login
+### Login
 
 - **URL:** `http://localhost/api_notepad/public/api/v1/users/validate`
 - **Método:** `POST`
